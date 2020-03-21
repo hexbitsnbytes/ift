@@ -1,0 +1,111 @@
+
+# Takes 2 signed integers and saves them to 
+# divident and divider respectively. 
+input:
+		IN
+		STO	divident
+		IN
+		STO 	divider
+		BR	divideByZero
+
+# This section checks for division by zero, and detects the
+# sign of the divident and divider
+divideByZero:
+		LDA	divider
+		BRZ
+		BR	isNeg
+
+dividentSign: 	LDA	divident
+		BRP	dividerSign
+		# executes if divident is negative
+		# sets dividentNeg flag
+		LDA	one
+		STO	dividentNeg
+		# absolute value of divident
+		# abs( negative number ) can be found by
+		# subtracting that value to zero
+		LDA	zero
+		SUB	divident
+		STO	absDivident
+		BR	dividerSign
+		
+dividerSign:
+		LDA	divider
+		BRP	successiveSub
+		# executes if divider is negative
+		# sets dividerNeg flag
+		LDA	one
+		STO	dividerNeg
+		LDA	divider
+		STO	dividerNeg
+		# absolute value of divident
+		# abs( negative number ) can be found by
+		# subtracting that value to zero
+		LDA	zero
+		SUB	divident
+		STO	absDivident
+		BR	initCounter
+
+# From LMC Instruction Manual regarding SUB:
+# Note: the contents of the mailbox are not changed, 
+# and the actions of the accumulator are not defined 
+# for subtract instructions that cause negative results 
+# -- however, a negative flag will be set so that BRP 
+# can be used properly 	
+# 
+initCounter:
+		LDA 	zero
+		STO	counter
+		BR	successiveSub		
+
+successiveSub:
+		LDA	counter
+		ADD	one
+		LDA	absdDivident
+		SUB	absDivider
+		# if divident = divider
+		BRZ	subEqZero
+		# if there is a remainder 
+		BRP	
+		# if that was the remainder
+		BR
+subEqZero:
+		LDA	zero
+		STO	remainder
+		LDA	counter
+		STO 	quotient
+		BR	output
+
+
+
+errorDivZero:
+		HLT
+
+# Outputs the result of the division of the divident by
+# the divider as two integers: signed int quotient and
+# undigned int remainder. 
+output:
+
+		LDA 	quotient
+		OUT	
+		LDA 	remainder
+		OUT	
+
+
+constants:
+zero	DAT	0
+one	DAT	1
+
+variables:
+divident	DAT	0
+diviser		DAT	0
+absDivident	DAT	0
+absDivider	DAT	0
+
+# if dividentNeg or dividerNeg is 0, it means the flag is 
+# not set. If the flag is set for dividentNeg, the divident 
+# is a negative value
+flags:
+dividentNeg	DAT	0
+dividerNeg	DAT	0
+
