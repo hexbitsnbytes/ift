@@ -1,0 +1,24 @@
+# Self Modifying program outputting the value of
+# unallocated memory
+label
+	LDA	TAB
+	STO	memVal
+	# apears as negative value in ACC
+	# Because the opcode is > 499 for
+	# signed int represented as 10 complement in memory
+	LDA	label
+	ADD	one
+	STO	label
+	BRZ	output
+
+output
+	LDA	memVal
+	OUT
+	BR	label
+	
+	
+
+one	DAT	1
+memVal	DAT	111
+
+TAB	DAT	8
