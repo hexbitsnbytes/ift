@@ -1,0 +1,56 @@
+	BR	adTAB
+#constante
+
+cent	DAT	100	#constante cent
+
+un	DAT	1	#constante un
+
+trcent	DAT	300	#constante trois cent
+
+#variables
+
+i	DAT	1	#nombres à ajouter
+			#aux cellules vides
+
+n	DAT	0	#nombre de cellules vides
+
+aTAB	DAT	0	#valeur numérique de l'adresse
+			#associé à TAB
+
+#instruction
+
+adTAB
+	LDA	add	#obtient l'adresse de TAB en
+	SUB	trcent	#prenant la valeur de l'étiquette
+	STO	TAB	#add et la soustrait par
+			#trois-cent
+body
+	LDA	cent	#determine le nombre de cellules
+	SUB	TAB	#vides en soustrayant le numéro
+	STO	n	#de l'adresse de TAB à 100
+	LDA	i
+loop	
+	SUB	n
+	BRP	TAB
+	LDA	add
+	ADD	un
+	STO	add
+	LDA	i
+add
+	STO	TAB
+	LDA	i
+	ADD	un
+	STO	i
+	BR	loop
+TAB
+	HLT
+
+
+
+
+
+
+
+
+
+
