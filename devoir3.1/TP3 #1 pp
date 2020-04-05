@@ -1,0 +1,62 @@
+	IN
+	STO	divid
+	STO	rest
+	IN
+	STO 	divis
+	LDA	rest
+	SUB	rest
+	SUB	rest
+	BRP	posconv
+	LDA	rest
+loop
+	SUB	divis
+	BRP	body1
+
+	LDA	estneg
+	BRZ	negconv
+	LDA	quot
+output
+	OUT
+	LDA	rest
+	OUT
+	HLT
+body1
+	LDA	quot
+	ADD	un
+	STO	quot
+
+	LDA	rest
+	SUB	divis
+	STO	rest
+
+	BR	loop
+posconv
+	STO	rest
+	LDA	estneg
+	SUB	un
+	STO	estneg
+	LDA	rest
+	BR	loop
+negconv
+	LDA	quot
+	SUB	quot
+	SUB	quot
+	BR	output
+
+divid	DAT	0	#dividende
+divis	DAT	0	#diviseur
+quot	DAT	0	#quotient
+rest	DAT	0	#reste
+i	DAT	0	#variable de loop
+un	DAT	1	#constante un
+estneg	DAT	1	#variable bool
+
+
+
+
+
+
+
+
+
+
