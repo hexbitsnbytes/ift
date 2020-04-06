@@ -1,4 +1,14 @@
-	BR	adTAB
+#
+# Programme TP3#2.lmc
+#
+# Ce programme sert à remplir les cellules
+#	de mémoires vides avec les nombres
+#	un jusqu'à n, n étant le nombre
+#	de cellules vide à remplir
+
+
+	BR	adTAB	#branche vers adTAB
+
 #constante
 
 cent	DAT	100	#constante cent
@@ -20,30 +30,42 @@ aTAB	DAT	0	#valeur numérique de l'adresse
 #instruction
 
 adTAB
-	LDA	add	#obtient l'adresse de TAB en
-	SUB	trcent	#prenant la valeur de l'étiquette
-	STO	TAB	#add et la soustrait par
-			#trois-cent
+	LDA	add	#obtient l'adresse de TAB sous
+	SUB	trcent	#valeur numérique en prenant
+	STO	aTAB	#la valeur de l'étiquette add, 
+			#qui correspond à 3xx, xx étant
+			#l'adresse de TAB, et en la
+			#soustrayant par trois-cent pour
+			#ensuite stocker cette valeur
+
 body
 	LDA	cent	#determine le nombre de cellules
-	SUB	TAB	#vides en soustrayant le numéro
+	SUB	aTAB	#vides en soustrayant le numéro
 	STO	n	#de l'adresse de TAB à 100
 	LDA	i
+
 loop	
-	SUB	n
-	BRP	TAB
-	LDA	add
-	ADD	un
-	STO	add
+	SUB	n	#soustrait la valeur de i par n
+	BRP	TAB	#et branche vers TAB si le résultat
+			#est égal ou plus grand que zéro
+
+	LDA	add	#modifie le code associé à
+	ADD	un	#l'étiquette add en l'additionnant
+	STO	add	#par un afin qu'il référence la
+			#prochaine cellule vide
+
 	LDA	i
 add
-	STO	TAB
-	LDA	i
+	STO	TAB	#stocke la valeur de i dans
+			#la cellule de mémoire vide
+			#référencé
+
+	LDA	i	#ajoute un à i et branche vers loop
 	ADD	un
 	STO	i
 	BR	loop
 TAB
-	HLT
+	HLT		#met fin au programme
 
 
 
