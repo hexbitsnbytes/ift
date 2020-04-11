@@ -17,6 +17,7 @@ fibonnaci() {
 }
 fibonnaci
 echo "Content of mem: $fib_array"
+# Cut is zero-indexed so add one to the field to cut
 select_indice=$(echo $fib_array | cut -d" " -f `expr $1 + 1`)
 
 echo "selected element of fibonnaci_array: $select_indice"
