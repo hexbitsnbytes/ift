@@ -26,7 +26,7 @@ average() {
     loop=$(cat $(pwd)/samples/liste.csv | sed '1d' | tr -d " " | wc -l)
     for i in $(seq 1 $loop);
     do
-        for line in $(echo $list | cut -f $i -d" ");
+        for line in $(echo ${list[@]} | cut -f $i -d" ");
         do
             f0=$(echo $line | cut -f 3 -d",")
             f1=$(echo $line | cut -f 4 -d",")
@@ -35,8 +35,8 @@ average() {
             op1=$(echo $f0 + $f1 + $f2 + $f3 | bc )
             op2=$(echo 4.0 | bc)
             # This does not return the right value yet
-            quotient=$(scale=3 && echo $op1 / $op2 | bc)
-            remainder=$(scale=3 && echo $op1 % $op2 | bc)
+            quotient=$(echo "scale=3; $op1 / $op2" | bc)
+            remainder=$(echo "scale=3; $op1 % $op2" | bc)
             counter=$(expr $counter + 1)
             echo student $i
             echo quotient: $quotient
