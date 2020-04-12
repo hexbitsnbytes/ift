@@ -6,3 +6,5 @@ Also using the opportunity to use and read the [Google Bash Style Guide](https:/
 
 ### To Do
 * Rewrite the project using POSIX compliant features only 
+* Use more expressive variable names
+* Make flow of code more readable and more modular in execution
