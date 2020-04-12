@@ -4,15 +4,13 @@
 f0=0
 f1=1
 arg=${1}
-
 fib_array=(1)
 
 # Implements fibonnaci iterative algorithm
 # Returns an element of fibonnaci based on index
 fibonnaci() {
-    for (( i=0; i<10; i++ ))
-    do
-	    fib=$(expr $f0 + $f1)
+    for (( i=0; i<10; i++ )); do
+	    fib=$(( ${f0} + ${f1}))
 	    f0=$f1
 	    f1=$fib
 	    echo "Value of \$i is: "${i}" and fib is "${fib}""
@@ -20,11 +18,11 @@ fibonnaci() {
     done
 }
 fibonnaci
-echo "Content of mem: $fib_array"
+echo "Content of mem: "${fib_array}""
 # Cut is zero-indexed so add one to the field to cut
 select_indice="$(\
     echo "${fib_array}" | \
-    cut -d" " -f `expr $1 + 1` \
+    cut -d" " -f $((${1} + 1)) \
     )"
 
-echo "selected element of fibonnaci_array: ${select_indice}"
+echo "selected element of fibonnaci_array: "${select_indice}""
