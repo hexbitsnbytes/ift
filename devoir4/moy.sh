@@ -2,22 +2,17 @@
 # There are several examples relying on bash specific syntax so i'm using /bin/bash as interpreter
 
 # iterates over lines of csv file, header removed
-command=$(cat $(pwd)/"${1}" \
+linesStudentGrades=$(cat $(pwd)/"${1}" \
           | sed '1d' \
           | tr -d " ")
 
-# Returns all the columns from source file to reuse in output file
-studentPrefix() {
-    for line in $(cat "$(pwd)/liste.csv" | sed '1d' | tr -d " "); do 
-        echo "${line}" 
-    done
-}
+
 
 # Returns all the lines from liste.csv source file as elements of listByLine
-parsedList() {
+listStudentGrades() {
     listByLine=()
     # inserts each line as elements of listByLine array
-    for line in $command; do 
+    for line in $linesStudentGrades; do 
         listByLine+=$(echo "${line} ")
     done
 
@@ -28,13 +23,10 @@ parsedList() {
 AVLIST=()
 average() {
     # call elements by index: echo ${list[1]}
-    list=($(parsedList))
-    counter=0
-    # Extracts the number of lines from source file to loop over
+    list=($(listStudentGrades))
+    # number of lines from source file to loop over
     loop=4 
     
-    #echo "loop=$loop"
-    #echo "list: $list"
     for i in $(seq 1 $loop); do
         for line in $(echo "${list[@]}" | cut -f $i -d" "); do
             # Assigns the results to variables
@@ -55,6 +47,14 @@ average() {
             # populates AVLIST env variable for each result
             AVLIST+=("$(echo -n "${op1} ")")
         done
+    done
+}
+
+# Returns all the columns from source file to reuse in output file
+studentPrefix() {
+    for line in $linesStudentGrades
+    do 
+        echo "${line}" 
     done
 }
 
