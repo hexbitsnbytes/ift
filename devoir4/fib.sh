@@ -19,9 +19,11 @@ fibonnaci() {
 }
 
 # Outputs the fibonnaci element
-if [ $# -eq 0 ]
-then
-    echo "No argument provided. Fist element in fibonacci is 1" 
+if [ $# -eq 0 ]; then
+    echo "Warning   : No argument provided. First element in fibonacci is 1" 
+    echo 
+    echo "Usage     : ./fib.sh <index of fibonnaci number to return starting at 1>"
+    echo "Example   : ./fib.sh 5"
 else 
     fibonnaci
     echo "${fib_array}" | cut -d" " -f $((${1} + 1))
