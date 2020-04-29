@@ -18,6 +18,7 @@ fibonnaci() {
     done
 }
 
+# Outputs the fibonnaci element
 if [ $# -eq 0 ]
 then
     echo "No argument provided. Fist element in fibonacci is 1" 
