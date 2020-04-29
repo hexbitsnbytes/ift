@@ -1,19 +1,15 @@
 #!/bin/bash
 # There are several examples relying on bash specific syntax so i'm using /bin/bash as interpreter
+
 # iterates over lines of csv file, header removed
 command=$(cat $(pwd)/"${1}" \
           | sed '1d' \
           | tr -d " ")
 
 # Returns all the columns from source file to reuse in output file
-# ACKA16066604,AckouyetWilliam
-# ADOA10329606,AdouaAparihouraAngeMack
-# AGHS09118409,GauthieEddine
-# AITZ30535409,AitMarco
 studentPrefix() {
     for line in $(cat "$(pwd)/liste.csv" | sed '1d' | tr -d " "); do 
-        echo "${line}" #\
-        #| cut -f 1,2 -d","
+        echo "${line}" 
     done
 }
 
@@ -29,8 +25,6 @@ parsedList() {
 }
 
 # Returns a AVLIST global variable with the list of averages
-# echo $AVLIST     
-# 78.875  82.562  80.125  72.000
 AVLIST=()
 average() {
     # call elements by index: echo ${list[1]}
@@ -56,15 +50,9 @@ average() {
             local f3pond=$(echo "scale=4; $f3 * 0.075" | bc)
             local f4pond=$(echo "scale=4; $f4 * 0.40" | bc)
             local f5pond=$(echo "scale=4; $f5 * 0.075" | bc)
-            #echo "f0=$f0"
-            #echo "f1=$f1"
-            #echo "f2=$f2"
-            #echo "f3=$f3"
-            #echo "f4=$f4"
-            #echo "f5=$f5"
-            local op1=$(echo "scale=4; $f0pond + $f1pond + $f2pond + $f3pond + $f4pond + $f5pond" | bc )
             # Computes the averages
-            #counter=$(( counter + 1))
+            local op1=$(echo "scale=4; $f0pond + $f1pond + $f2pond + $f3pond + $f4pond + $f5pond" | bc )
+            # populates AVLIST env variable for each result
             AVLIST+=("$(echo -n "${op1} ")")
         done
     done
@@ -75,10 +63,7 @@ count=1
 average
 echo "$(cat liste.csv | head -n 1),Total" > notes.csv
 for student in $(studentPrefix); do
-    #echo "count=$count"
-    #echo "AVLIST:${AVLIST[@]}"
     av=$(echo ${AVLIST[@]} | cut -d" " -f $count)
-    #echo "av=$av"
     echo "${student},${av}" >> notes.csv
     count=$(( count + 1 ))
 done
