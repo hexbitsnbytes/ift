@@ -1,5 +1,5 @@
-#!/bin/bash
-#TP4no1.bash script
+#!/bin/sh
+#fibpp.sh script
 n=$1
 nm2=1
 nm1=1
